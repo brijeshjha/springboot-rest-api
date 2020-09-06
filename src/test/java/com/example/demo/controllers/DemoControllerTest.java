@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,13 +17,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.demo.configfiles.EmployeeConfiguration;
 import com.example.demo.exceptions.ConstraintViolationExceptionHandler;
+import com.example.demo.services.DemoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {EmployeeConfiguration.class})
 public class DemoControllerTest {
 
-	@InjectMocks
+	@Mock
 	DemoController controller;
+	
+	@InjectMocks
+	DemoService service;
 	
 	@InjectMocks
 	ConstraintViolationExceptionHandler exceptionHandler;
@@ -39,17 +44,25 @@ public class DemoControllerTest {
 
 	@Test
 	public void testIfNameIsNotBlankReturnSuccess() throws Exception {
-		String content = "{\r\n" + "	\"name\" : \"brijesh\",\r\n" + "	\"age\" : \"20\",\r\n"
-				+ "	\"salary\" : 1000\r\n" + "}";
-		mockMvc.perform(post("/v1/validate").contentType(MediaType.APPLICATION_JSON).content(content))
+		String content = "{\r\n" + 
+				"	\"name\" : \"brijesh\",\r\n" + 
+				"	\"age\" : \"20\",\r\n" + 
+				"	\"salary\" : 1000,\r\n" + 
+				"    \"employmentType\" : \"Permanent\"\r\n" + 
+				"}";
+		mockMvc.perform(post("/v1/employee").contentType(MediaType.APPLICATION_JSON).content(content))
 				.andExpect(status().isOk());
 	}
 	
 	@Test
 	public void testIfNameIsBlankThrowError() throws Exception {
-		String content = "{\r\n" + "	\"name\" : \"\",\r\n" + "	\"age\" : \"20\",\r\n"
-				+ "	\"salary\" : 1000\r\n" + "}"; 
-		mockMvc.perform(post("/v1/validate").contentType(MediaType.APPLICATION_JSON).content(content))
+		String content = "{\r\n" + 
+				"	\"name\" : \"\",\r\n" + 
+				"	\"age\" : \"20\",\r\n" + 
+				"	\"salary\" : 1000,\r\n" + 
+				"    \"employmentType\" : \"Permanent\"\r\n" + 
+				"}"; 
+		mockMvc.perform(post("/v1/employee").contentType(MediaType.APPLICATION_JSON).content(content))
 		.andExpect(status().is(400))
 		.andExpect(jsonPath("$.errors[0].message", Matchers.is("name should not be blank")));
 	}

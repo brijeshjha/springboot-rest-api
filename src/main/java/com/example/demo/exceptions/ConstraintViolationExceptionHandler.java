@@ -33,7 +33,7 @@ public class ConstraintViolationExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 	
-	@ExceptionHandler(InvalidFormatException.class)
+	/*@ExceptionHandler(InvalidFormatException.class)
 	public ResponseEntity<Errors> handleExceptions(InvalidFormatException e) {
 		List<Error> errorList = new ArrayList<Error>();
 		Error error = new Error(HttpStatus.BAD_REQUEST.value(),e.getValue().toString()+" is of Invalid Type");
@@ -41,7 +41,7 @@ public class ConstraintViolationExceptionHandler {
 		errors.setErrors(errorList);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
-	
+	*/
 
 	
 }

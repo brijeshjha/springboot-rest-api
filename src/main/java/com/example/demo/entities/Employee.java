@@ -1,12 +1,20 @@
 package com.example.demo.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import com.example.demo.controllers.IsEmployementValid;
 
+@Entity
 public class Employee {
 
+	@Id
+	@GeneratedValue
+	private int empid;
+	
 	@NotBlank(message = "{nameInvalid}")
 	private String name;
 	
@@ -51,9 +59,18 @@ public class Employee {
 		this.employmentType = employmentType;
 	}
 
+	public int getEmpid() {
+		return empid;
+	}
+
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+
 	@Override
 	public String toString() {
-		return "Employee [name=" + name + ", age=" + age + ", salary=" + salary + "]";
+		return "Employee [empid=" + empid + ", name=" + name + ", age=" + age + ", salary=" + salary
+				+ ", employmentType=" + employmentType + "]";
 	}
 
 }

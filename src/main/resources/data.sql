@@ -1,0 +1,1 @@
+insert into Employee values (100,20,'Contract','brijesh',2000)

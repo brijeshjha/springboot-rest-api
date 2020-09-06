@@ -7,7 +7,7 @@ public class EmploymentTypeValidator implements ConstraintValidator<IsEmployemen
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		if(value.matches("Permanent | Contract")) {
+		if(value.matches("Permanent|Contract")) {
 		  return true;	
 		}
 		return false;
